@@ -5,23 +5,23 @@ on:
   push:
     branches:
       - master
-  workflow_dispatch:
+  
 jobs:
   build:
     runs-on: ubuntu-20.04
     steps:
-     # - name: Checkout source code
-      #  uses: actions/checkout@v2.3.4
-      # - name: Run Hadolint for Dockerfile code quality check
-    #  - name: Configure AWS credentials
-     #   uses: aws-actions/configure-aws-credentials@v1
-      #  with:
-       - name: test secrets 
-         run: 
-           echo "$My_Token"
+     - name: Checkout source code
+       uses: actions/checkout@v2.3.4
+
+     - name: configure AWS credentials 
+       uses: aws-actions/configure-aws-credentials@v1
+       with:
+         aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+         aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+         aws_default_region: us-east-1
+         dot_env: ${{ secrets.DOT_ENV }}
          
-         env: 
-          My_Token: ${{ secrets.My_Token}}
-         
-          
-          #aws-region: us-east-1
+
+     - name: Login to Amazon ECR
+       id: login-ecr
+       uses: aws-actions/amazon-ecr-login@v1   
