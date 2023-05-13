@@ -1,13 +1,14 @@
 version: '3'
 services: 
   web:
-    build: 
-     context: .
-     dockerfile: Dockerfile.dev
+    image:  744042451699.dkr.ecr.us-east-1.amazonaws.com/host_react_app:1.0.7
     ports:
-      - "3000:3000"
+      - "3000:80"
     volumes:
       - /app/node_modules
       - .:/app
-  
-      
+  nginx:
+    image: nginx
+    ports: 
+      - "8080:80"
+           
